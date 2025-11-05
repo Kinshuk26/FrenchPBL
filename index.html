@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les 24 Heures du Mans</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #ffffff;
+      min-height: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(15, 15, 30, 0.95);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border-bottom: 3px solid #e74c3c;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #e74c3c;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #e74c3c;
+      border-bottom-color: #e74c3c;
+    }
+
+    .lang-toggle {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .lang-toggle:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(22, 33, 62, 0.3) 100%);
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      margin: 0 0 20px 0;
+      color: #e74c3c;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 22px;
+      color: #ecf0f1;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Content Sections */
+    .content {
+      padding: 60px 0;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 40px;
+      margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section h2 {
+      color: #e74c3c;
+      font-size: 36px;
+      margin-top: 0;
+      margin-bottom: 25px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 15px;
+    }
+
+    .section h3 {
+      color: #3498db;
+      font-size: 24px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    .section p {
+      line-height: 1.8;
+      font-size: 17px;
+      color: #ecf0f1;
+      margin-bottom: 20px;
+    }
+
+    .section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .section li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      line-height: 1.6;
+      color: #ecf0f1;
+    }
+
+    .section li:before {
+      content: "🏁";
+      position: absolute;
+      left: 0;
+    }
+
+    /* Grid Layouts */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+    }
+
+    .card h3 {
+      color: #e74c3c;
+      margin-top: 0;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th {
+      background: #e74c3c;
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ecf0f1;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Driver Cards */
+    .driver-card {
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
+      border-radius: 12px;
+      padding: 40px;
+      border-left: 4px solid #e74c3c;
+      margin-bottom: 35px;
+    }
+
+    .driver-card h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #e74c3c;
+      font-size: 26px;
+      line-height: 1.3;
+    }
+
+    .driver-card p {
+      margin-bottom: 25px;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .driver-stats {
+      display: flex;
+      gap: 25px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 25px;
+      border-radius: 10px;
+      font-weight: 600;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .stat-label {
+      color: #3498db;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      color: #ffffff;
+      font-size: 20px;
+      display: block;
+      font-weight: 700;
+    }
+
+    /* Team Section */
+    .team-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faculty {
+      background: rgba(52, 152, 219, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 40px;
+      border: 2px solid #3498db;
+    }
+
+    .faculty h3 {
+      color: #3498db;
+      margin: 0 0 10px 0;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(15, 15, 30, 0.95);
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 60px;
+      border-top: 3px solid #e74c3c;
+    }
+
+    footer p {
+      margin: 5px 0;
+      color: #ecf0f1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .section {
+        padding: 25px;
+      }
+
+      .section h2 {
+        font-size: 28px;
+      }
+
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <nav>
+   <div class="container">
+    <div class="nav-content">
+     <div class="logo" id="siteLogo">
+      Les 24 Heures du Mans
+     </div>
+     <div class="nav-links"><a href="#" data-page="home" class="nav-link active" data-fr="Accueil" data-en="Home">Accueil</a> <a href="#" data-page="events" class="nav-link" data-fr="Événements" data-en="Events">Événements</a> <a href="#" data-page="drivers" class="nav-link" data-fr="Pilotes" data-en="Drivers">Pilotes</a> <a href="#" data-page="results" class="nav-link" data-fr="Résultats" data-en="Results">Résultats</a> <a href="#" data-page="team" class="nav-link" data-fr="Équipe" data-en="Team">Équipe</a>
+     </div><button class="lang-toggle" id="langToggle">EN</button>
+    </div>
+   </div>
+  </nav>
+  <div id="homePage" class="page">
+   <div class="hero">
+    <div class="container">
+     <h1 id="heroTitle" data-fr="La Course Légendaire" data-en="The Legendary Race">La Course Légendaire</h1>
+     <p id="heroSubtitle" data-fr="24 heures d'endurance, de vitesse et de passion au cœur de la France" data-en="24 hours of endurance, speed and passion in the heart of France">24 heures d'endurance, de vitesse et de passion au cœur de la France</p>
+    </div>
+   </div>
+   <div class="content">
+    <div class="container">
+     <div class="section">
+      <h2 data-fr="🏁 Le Circuit de la Sarthe" data-en="🏁 The Circuit de la Sarthe">🏁 Le Circuit de la Sarthe</h2>
+      <p data-fr="Le Circuit de la Sarthe, situé près de la ville du Mans dans la région des Pays de la Loire, est l'un des circuits les plus emblématiques du monde. Avec ses 13,626 kilomètres, il combine routes publiques fermées et sections de circuit permanent, créant un défi unique pour les pilotes." data-en="The Circuit de la Sarthe, located near the city of Le Mans in the Pays de la Loire region, is one of the most iconic circuits in the world. With its 13.626 kilometers, it combines closed public roads and permanent circuit sections, creating a unique challenge for drivers.">Le Circuit de la Sarthe, situé près de la ville du Mans dans la région des Pays de la Loire, est l'un des circuits les plus emblématiques du monde. Avec ses 13,626 kilomètres, il combine routes publiques fermées et sections de circuit permanent, créant un défi unique pour les pilotes.</p>
+      <h3 data-fr="🏎️ Caractéristiques du Circuit" data-en="🏎️ Circuit Characteristics">🏎️ Caractéristiques du Circuit</h3>
+      <ul>
+       <li data-fr="📏 Longueur : 13,626 km" data-en="📏 Length: 13.626 km">📏 Longueur : 13,626 km</li>
+       <li data-fr="🚀 Ligne droite des Hunaudières : 6 km de vitesse pure" data-en="🚀 Hunaudières Straight: 6 km of pure speed">🚀 Ligne droite des Hunaudières : 6 km de vitesse pure</li>
+       <li data-fr="🌀 Virages emblématiques : Tertre Rouge, Mulsanne, Indianapolis" data-en="🌀 Iconic corners: Tertre Rouge, Mulsanne, Indianapolis">🌀 Virages emblématiques : Tertre Rouge, Mulsanne, Indianapolis</li>
+       <li data-fr="👥 Capacité : Plus de 250 000 spectateurs" data-en="👥 Capacity: Over 250,000 spectators">👥 Capacité : Plus de 250 000 spectateurs</li>
+      </ul>
+     </div>
+     <div class="section">
+      <h2 data-fr="🇫🇷 Impact Culturel Français" data-en="🇫🇷 French Cultural Impact">🇫🇷 Impact Culturel Français</h2>
+      <div class="grid">
+       <div class="card">
+        <h3 data-fr="🏆 Patrimoine National" data-en="🏆 National Heritage">🏆 Patrimoine National</h3>
+        <p data-fr="Les 24 Heures du Mans sont profondément ancrées dans la culture française depuis 1923. La course représente l'excellence française en matière d'ingénierie automobile et d'organisation d'événements sportifs de classe mondiale." data-en="The 24 Hours of Le Mans has been deeply rooted in French culture since 1923. The race represents French excellence in automotive engineering and world-class sporting event organization.">Les 24 Heures du Mans sont profondément ancrées dans la culture française depuis 1923. La course représente l'excellence française en matière d'ingénierie automobile et d'organisation d'événements sportifs de classe mondiale.</p>
+       </div>
+       <div class="card">
+        <h3 data-fr="🎬 Influence Culturelle" data-en="🎬 Cultural Influence">🎬 Influence Culturelle</h3>
+        <p data-fr="La course a inspiré de nombreux films, livres et documentaires. Le film 'Le Mans' avec Steve McQueen (1971) est devenu culte, immortalisant la course dans la culture populaire mondiale." data-en="The race has inspired numerous films, books and documentaries. The film 'Le Mans' with Steve McQueen (1971) became cult, immortalizing the race in global popular culture.">La course a inspiré de nombreux films, livres et documentaires. Le film "Le Mans" avec Steve McQueen (1971) est devenu culte, immortalisant la course dans la culture populaire mondiale.</p>
+       </div>
+       <div class="card">
+        <h3 data-fr="🎪 Événement Festif" data-en="🎪 Festive Event">🎪 Événement Festif</h3>
+        <p data-fr="Au-delà de la course, c'est un véritable festival qui anime la région pendant une semaine entière, avec concerts, expositions et célébrations qui rassemblent les communautés locales et internationales." data-en="Beyond the race, it's a true festival that animates the region for an entire week, with concerts, exhibitions and celebrations that bring together local and international communities.">Au-delà de la course, c'est un véritable festival qui anime la région pendant une semaine entière, avec concerts, expositions et célébrations qui rassemblent les communautés locales et internationales.</p>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2 data-fr="💰 Impact Économique" data-en="💰 Economic Impact">💰 Impact Économique</h2>
+      <p data-fr="Les 24 Heures du Mans génèrent un impact économique considérable pour la région des Pays de la Loire et pour toute la France." data-en="The 24 Hours of Le Mans generates considerable economic impact for the Pays de la Loire region and for all of France.">Les 24 Heures du Mans génèrent un impact économique considérable pour la région des Pays de la Loire et pour toute la France.</p>
+      <div class="grid">
+       <div class="card">
+        <h3 data-fr="💰 Revenus Directs" data-en="💰 Direct Revenue">💰 Revenus Directs</h3>
+        <p data-fr="Plus de 100 millions d'euros de retombées économiques annuelles pour la région, incluant billetterie, hôtellerie, restauration et commerce local." data-en="Over 100 million euros in annual economic benefits for the region, including ticketing, hospitality, catering and local commerce.">Plus de 100 millions d'euros de retombées économiques annuelles pour la région, incluant billetterie, hôtellerie, restauration et commerce local.</p>
+       </div>
+       <div class="card">
+        <h3 data-fr="👥 Emplois" data-en="👥 Employment">👥 Emplois</h3>
+        <p data-fr="Création de milliers d'emplois temporaires et permanents dans l'organisation, la sécurité, l'accueil et les services associés à l'événement." data-en="Creation of thousands of temporary and permanent jobs in organization, security, hospitality and services associated with the event.">Création de milliers d'emplois temporaires et permanents dans l'organisation, la sécurité, l'accueil et les services associés à l'événement.</p>
+       </div>
+       <div class="card">
+        <h3 data-fr="🌍 Tourisme International" data-en="🌍 International Tourism">🌍 Tourisme International</h3>
+        <p data-fr="Attraction de plus de 250 000 visiteurs du monde entier, stimulant le tourisme régional et national tout au long de l'année." data-en="Attracting over 250,000 visitors from around the world, stimulating regional and national tourism throughout the year.">Attraction de plus de 250 000 visiteurs du monde entier, stimulant le tourisme régional et national tout au long de l'année.</p>
+       </div>
+      </div>
+     </div>
+     <div class="section">
+      <h2 data-fr="⚡ Avancées Technologiques" data-en="⚡ Technological Advancements">⚡ Avancées Technologiques</h2>
+      <p data-fr="Le Mans est un laboratoire d'innovation automobile où les technologies de demain sont testées dans les conditions les plus extrêmes." data-en="Le Mans is an automotive innovation laboratory where tomorrow's technologies are tested in the most extreme conditions.">Le Mans est un laboratoire d'innovation automobile où les technologies de demain sont testées dans les conditions les plus extrêmes.</p>
+      <h3 data-fr="🔋 Hybridation et Électrification" data-en="🔋 Hybridization and Electrification">🔋 Hybridation et Électrification</h3>
+      <p data-fr="Les systèmes hybrides développés au Mans ont directement influencé les voitures de série. Toyota, Porsche et Audi ont perfectionné leurs technologies de récupération d'énergie cinétique (KERS) qui équipent maintenant les véhicules grand public." data-en="Hybrid systems developed at Le Mans have directly influenced production cars. Toyota, Porsche and Audi have perfected their kinetic energy recovery systems (KERS) that now equip consumer vehicles.">Les systèmes hybrides développés au Mans ont directement influencé les voitures de série. Toyota, Porsche et Audi ont perfectionné leurs technologies de récupération d'énergie cinétique (KERS) qui équipent maintenant les véhicules grand public.</p>
+      <h3 data-fr="🛡️ Sécurité Active et Passive" data-en="🛡️ Active and Passive Safety">🛡️ Sécurité Active et Passive</h3>
+      <p data-fr="Les innovations en matière de sécurité testées au Mans incluent les structures monocoques en fibre de carbone, les systèmes de freinage avancés, et les dispositifs de protection des pilotes qui ont sauvé d'innombrables vies sur route." data-en="Safety innovations tested at Le Mans include carbon fiber monocoque structures, advanced braking systems, and driver protection devices that have saved countless lives on the road.">Les innovations en matière de sécurité testées au Mans incluent les structures monocoques en fibre de carbone, les systèmes de freinage avancés, et les dispositifs de protection des pilotes qui ont sauvé d'innombrables vies sur route.</p>
+      <h3 data-fr="💡 Éclairage et Aérodynamique" data-en="💡 Lighting and Aerodynamics">💡 Éclairage et Aérodynamique</h3>
+      <p data-fr="Les phares LED haute performance, les systèmes d'éclairage adaptatif et les solutions aérodynamiques actives développés pour la course de nuit ont révolutionné l'industrie automobile moderne." data-en="High-performance LED headlights, adaptive lighting systems and active aerodynamic solutions developed for night racing have revolutionized the modern automotive industry.">Les phares LED haute performance, les systèmes d'éclairage adaptatif et les solutions aérodynamiques actives développés pour la course de nuit ont révolutionné l'industrie automobile moderne.</p>
+      <h3 data-fr="📊 Télémétrie et Analyse de Données" data-en="📊 Telemetry and Data Analysis">📊 Télémétrie et Analyse de Données</h3>
+      <p data-fr="Les systèmes de télémétrie en temps réel et l'analyse massive de données développés au Mans sont maintenant utilisés dans les véhicules connectés et les systèmes de maintenance prédictive." data-en="Real-time telemetry systems and massive data analysis developed at Le Mans are now used in connected vehicles and predictive maintenance systems.">Les systèmes de télémétrie en temps réel et l'analyse massive de données développés au Mans sont maintenant utilisés dans les véhicules connectés et les systèmes de maintenance prédictive.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="eventsPage" class="page hidden">
+   <div class="hero">
+    <div class="container">
+     <h1 data-fr="📅 Événements Marquants" data-en="📅 Notable Events">📅 Événements Marquants</h1>
+     <p data-fr="Un siècle d'histoire, de triomphes et de moments inoubliables 🏆" data-en="A century of history, triumphs and unforgettable moments 🏆">Un siècle d'histoire, de triomphes et de moments inoubliables 🏆</p>
+    </div>
+   </div>
+   <div class="content">
+    <div class="container">
+     <div class="section">
+      <h2 data-fr="🏁 1923 - La Première Course" data-en="🏁 1923 - The First Race">🏁 1923 - La Première Course</h2>
+      <p data-fr="Le 26 mai 1923, la première édition des 24 Heures du Mans voit le jour. André Lagache et René Léonard remportent la victoire au volant d'une Chenard-Walcker, parcourant 2 209 km à une moyenne de 92 km/h. Cette course inaugurale établit les fondations d'une légende qui perdure depuis un siècle." data-en="On May 26, 1923, the first edition of the 24 Hours of Le Mans was born. André Lagache and René Léonard won driving a Chenard-Walcker, covering 2,209 km at an average of 92 km/h. This inaugural race established the foundations of a legend that has endured for a century.">Le 26 mai 1923, la première édition des 24 Heures du Mans voit le jour. André Lagache et René Léonard remportent la victoire au volant d'une Chenard-Walcker, parcourant 2 209 km à une moyenne de 92 km/h. Cette course inaugurale établit les fondations d'une légende qui perdure depuis un siècle.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="⚠️ 1955 - La Tragédie" data-en="⚠️ 1955 - The Tragedy">⚠️ 1955 - La Tragédie</h2>
+      <p data-fr="Le 11 juin 1955 marque le jour le plus sombre de l'histoire du Mans. Un accident impliquant la Mercedes de Pierre Levegh cause la mort de 83 spectateurs et du pilote lui-même. Cet événement tragique conduit à des révolutions majeures en matière de sécurité dans le sport automobile mondial et à l'interdiction temporaire des courses automobiles dans plusieurs pays européens." data-en="June 11, 1955 marks the darkest day in Le Mans history. An accident involving Pierre Levegh's Mercedes caused the death of 83 spectators and the driver himself. This tragic event led to major revolutions in safety in world motorsport and the temporary ban on motor racing in several European countries.">Le 11 juin 1955 marque le jour le plus sombre de l'histoire du Mans. Un accident impliquant la Mercedes de Pierre Levegh cause la mort de 83 spectateurs et du pilote lui-même. Cet événement tragique conduit à des révolutions majeures en matière de sécurité dans le sport automobile mondial et à l'interdiction temporaire des courses automobiles dans plusieurs pays européens.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🇺🇸 1966 - Le Triomphe Ford" data-en="🇺🇸 1966 - Ford's Triumph">🇺🇸 1966 - Le Triomphe Ford</h2>
+      <p data-fr="Après des années de domination Ferrari, Ford réalise l'impossible avec un triplé historique. Les Ford GT40 occupent les trois premières places, marquant la première victoire américaine au Mans. Cette victoire, fruit d'un investissement massif et d'une détermination sans faille, met fin à la suprématie européenne et inspire le film 'Ford v Ferrari' en 2019." data-en="After years of Ferrari dominance, Ford achieves the impossible with a historic 1-2-3 finish. The Ford GT40s occupy the first three places, marking the first American victory at Le Mans. This victory, the result of massive investment and unwavering determination, ended European supremacy and inspired the 2019 film 'Ford v Ferrari'.">Après des années de domination Ferrari, Ford réalise l'impossible avec un triplé historique. Les Ford GT40 occupent les trois premières places, marquant la première victoire américaine au Mans. Cette victoire, fruit d'un investissement massif et d'une détermination sans faille, met fin à la suprématie européenne et inspire le film "Ford v Ferrari" en 2019.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🇬🇧 1988 - La Domination Jaguar" data-en="🇬🇧 1988 - Jaguar Dominance">🇬🇧 1988 - La Domination Jaguar</h2>
+      <p data-fr="Jaguar réalise un quintuplé légendaire avec cinq XJR-9 dans le top 5. Cette démonstration de force technique et de fiabilité reste l'une des performances les plus impressionnantes de l'histoire du Mans. La victoire de Jan Lammers, Johnny Dumfries et Andy Wallace symbolise le retour au sommet de la marque britannique." data-en="Jaguar achieves a legendary 1-2-3-4-5 finish with five XJR-9s in the top 5. This demonstration of technical strength and reliability remains one of the most impressive performances in Le Mans history. The victory of Jan Lammers, Johnny Dumfries and Andy Wallace symbolizes the return to the top of the British brand.">Jaguar réalise un quintuplé légendaire avec cinq XJR-9 dans le top 5. Cette démonstration de force technique et de fiabilité reste l'une des performances les plus impressionnantes de l'histoire du Mans. La victoire de Jan Lammers, Johnny Dumfries et Andy Wallace symbolise le retour au sommet de la marque britannique.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🇩🇪 2011 - Le Retour d'Audi" data-en="🇩🇪 2011 - Audi's Return">🇩🇪 2011 - Le Retour d'Audi</h2>
+      <p data-fr="Audi remporte sa 10ème victoire au Mans, établissant un nouveau record de distance avec 5 410 km parcourus. Cette édition marque également le début de l'ère hybride avec l'Audi R18 e-tron quattro, démontrant que performance et efficacité énergétique peuvent coexister au plus haut niveau." data-en="Audi wins its 10th Le Mans victory, establishing a new distance record with 5,410 km covered. This edition also marks the beginning of the hybrid era with the Audi R18 e-tron quattro, demonstrating that performance and energy efficiency can coexist at the highest level.">Audi remporte sa 10ème victoire au Mans, établissant un nouveau record de distance avec 5 410 km parcourus. Cette édition marque également le début de l'ère hybride avec l'Audi R18 e-tron quattro, démontrant que performance et efficacité énergétique peuvent coexister au plus haut niveau.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🇯🇵 2016 - Le Drame Toyota" data-en="🇯🇵 2016 - Toyota's Drama">🇯🇵 2016 - Le Drame Toyota</h2>
+      <p data-fr="Dans l'un des moments les plus cruels de l'histoire du Mans, la Toyota TS050 Hybrid de Kazuki Nakajima, en tête avec trois minutes d'avance, tombe en panne à trois minutes de l'arrivée. Cette défaillance mécanique au dernier tour offre la victoire à Porsche et devient l'un des retournements les plus dramatiques du sport automobile." data-en="In one of the cruelest moments in Le Mans history, Kazuki Nakajima's Toyota TS050 Hybrid, leading with a three-minute advantage, broke down three minutes from the finish. This mechanical failure on the last lap handed victory to Porsche and became one of the most dramatic turnarounds in motorsport.">Dans l'un des moments les plus cruels de l'histoire du Mans, la Toyota TS050 Hybrid de Kazuki Nakajima, en tête avec trois minutes d'avance, tombe en panne à trois minutes de l'arrivée. Cette défaillance mécanique au dernier tour offre la victoire à Porsche et devient l'un des retournements les plus dramatiques du sport automobile.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🏆 2018-2021 - L'Ère Toyota" data-en="🏆 2018-2021 - The Toyota Era">🏆 2018-2021 - L'Ère Toyota</h2>
+      <p data-fr="Après des années de déceptions, Toyota domine enfin Le Mans avec quatre victoires consécutives (2018-2021). Fernando Alonso rejoint le club exclusif des pilotes ayant remporté la Triple Couronne du sport automobile (Monaco, Indianapolis, Le Mans). Cette période marque l'apogée de la technologie hybride en endurance." data-en="After years of disappointment, Toyota finally dominates Le Mans with four consecutive victories (2018-2021). Fernando Alonso joins the exclusive club of drivers who have won the Triple Crown of motorsport (Monaco, Indianapolis, Le Mans). This period marks the peak of hybrid technology in endurance racing.">Après des années de déceptions, Toyota domine enfin Le Mans avec quatre victoires consécutives (2018-2021). Fernando Alonso rejoint le club exclusif des pilotes ayant remporté la Triple Couronne du sport automobile (Monaco, Indianapolis, Le Mans). Cette période marque l'apogée de la technologie hybride en endurance.</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="🎉 2023 - Le Centenaire" data-en="🎉 2023 - The Centenary">🎉 2023 - Le Centenaire</h2>
+      <p data-fr="Les 24 Heures du Mans célèbrent leur 100ème anniversaire avec une édition spectaculaire. Ferrari remporte sa première victoire depuis 1965, mettant fin à 58 ans d'attente. Cette victoire historique de l'équipage Pier Guidi-Calado-Giovinazzi symbolise le renouveau de la Scuderia en endurance et attire un record de 325 000 spectateurs sur le week-end." data-en="The 24 Hours of Le Mans celebrates its 100th anniversary with a spectacular edition. Ferrari wins its first victory since 1965, ending 58 years of waiting. This historic victory by the Pier Guidi-Calado-Giovinazzi crew symbolizes the Scuderia's endurance revival and attracts a record 325,000 spectators over the weekend.">Les 24 Heures du Mans célèbrent leur 100ème anniversaire avec une édition spectaculaire. Ferrari remporte sa première victoire depuis 1965, mettant fin à 58 ans d'attente. Cette victoire historique de l'équipage Pier Guidi-Calado-Giovinazzi symbolise le renouveau de la Scuderia en endurance et attire un record de 325 000 spectateurs sur le week-end.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="driversPage" class="page hidden">
+   <div class="hero">
+    <div class="container">
+     <h1 data-fr="🏎️ Pilotes Légendaires" data-en="🏎️ Legendary Drivers">🏎️ Pilotes Légendaires</h1>
+     <p data-fr="Les héros qui ont marqué l'histoire du Mans 🏆" data-en="The heroes who made Le Mans history 🏆">Les héros qui ont marqué l'histoire du Mans 🏆</p>
+    </div>
+   </div>
+   <div class="content">
+    <div class="container">
+     <div class="driver-card">
+      <h3>Tom Kristensen </h3>
+      <p data-fr="Surnommé 'Monsieur Le Mans', le pilote danois détient le record absolu avec 9 victoires (1997, 2000-2005, 2008, 2013). Sa domination avec Audi dans les années 2000 reste inégalée. Kristensen incarne la constance, l'intelligence de course et la capacité à performer dans toutes les conditions." data-en="Nicknamed 'Mr. Le Mans', the Danish driver holds the absolute record with 9 victories (1997, 2000-2005, 2008, 2013). His dominance with Audi in the 2000s remains unmatched. Kristensen embodies consistency, race intelligence and the ability to perform in all conditions.">Surnommé "Monsieur Le Mans", le pilote danois détient le record absolu avec 9 victoires (1997, 2000-2005, 2008, 2013). Sa domination avec Audi dans les années 2000 reste inégalée. Kristensen incarne la constance, l'intelligence de course et la capacité à performer dans toutes les conditions.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">9</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">18</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1997-2014</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Jacky Ickx </h3>
+      <p data-fr="Légende belge avec 6 victoires (1969, 1975-1977, 1981-1982), Ickx a également brillé en Formule 1. Son duel épique avec Hans Herrmann en 1969, remporté par seulement 120 mètres, reste l'une des finitions les plus serrées de l'histoire. Pilote complet, il excellait aussi bien de jour que de nuit." data-en="Belgian legend with 6 victories (1969, 1975-1977, 1981-1982), Ickx also shone in Formula 1. His epic duel with Hans Herrmann in 1969, won by just 120 meters, remains one of the closest finishes in history. A complete driver, he excelled both day and night.">Légende belge avec 6 victoires (1969, 1975-1977, 1981-1982), Ickx a également brillé en Formule 1. Son duel épique avec Hans Herrmann en 1969, remporté par seulement 120 mètres, reste l'une des finitions les plus serrées de l'histoire. Pilote complet, il excellait aussi bien de jour que de nuit.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">6</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">14</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1969-1985</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Derek Bell </h3>
+      <p data-fr="Le gentleman britannique a remporté 5 victoires (1975, 1981-1987) principalement avec Porsche. Bell était réputé pour sa régularité exceptionnelle et sa capacité à maintenir un rythme constant pendant 24 heures. Son partenariat avec Jacky Ickx a produit trois victoires mémorables." data-en="The British gentleman won 5 victories (1975, 1981-1987) mainly with Porsche. Bell was renowned for his exceptional consistency and ability to maintain a constant pace for 24 hours. His partnership with Jacky Ickx produced three memorable victories.">Le gentleman britannique a remporté 5 victoires (1975, 1981-1987) principalement avec Porsche. Bell était réputé pour sa régularité exceptionnelle et sa capacité à maintenir un rythme constant pendant 24 heures. Son partenariat avec Jacky Ickx a produit trois victoires mémorables.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">5</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">20</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1970-1996</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Frank Biela </h3>
+      <p data-fr="Pilote allemand avec 5 victoires (2000-2002, 2006-2007) toutes avec Audi. Biela était un spécialiste de l'endurance, combinant vitesse pure et gestion intelligente de la course. Son expérience en DTM lui a donné une maîtrise exceptionnelle des voitures à traction intégrale." data-en="German driver with 5 victories (2000-2002, 2006-2007) all with Audi. Biela was an endurance specialist, combining pure speed with intelligent race management. His DTM experience gave him exceptional mastery of all-wheel drive cars.">Pilote allemand avec 5 victoires (2000-2002, 2006-2007) toutes avec Audi. Biela était un spécialiste de l'endurance, combinant vitesse pure et gestion intelligente de la course. Son expérience en DTM lui a donné une maîtrise exceptionnelle des voitures à traction intégrale.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">5</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">11</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1999-2009</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Emanuele Pirro </h3>
+      <p data-fr="L'Italien a remporté 5 victoires (2000-2002, 2006-2007) avec Audi, formant un duo redoutable avec Frank Biela. Ancien pilote de F1, Pirro apportait une finesse technique et une intelligence tactique qui ont fait la différence dans les moments cruciaux." data-en="The Italian won 5 victories (2000-2002, 2006-2007) with Audi, forming a formidable duo with Frank Biela. A former F1 driver, Pirro brought technical finesse and tactical intelligence that made the difference in crucial moments.">L'Italien a remporté 5 victoires (2000-2002, 2006-2007) avec Audi, formant un duo redoutable avec Frank Biela. Ancien pilote de F1, Pirro apportait une finesse technique et une intelligence tactique qui ont fait la différence dans les moments cruciaux.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">5</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">13</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1994-2009</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Olivier Gendebien </h3>
+      <p data-fr="Pilote belge légendaire avec 4 victoires (1958, 1960-1962) principalement avec Ferrari. Gendebien était réputé pour son style fluide et sa capacité à préserver les mécaniques tout en maintenant un rythme compétitif. Il a également brillé dans d'autres courses d'endurance." data-en="Legendary Belgian driver with 4 victories (1958, 1960-1962) mainly with Ferrari. Gendebien was renowned for his fluid style and ability to preserve mechanics while maintaining a competitive pace. He also shone in other endurance races.">Pilote belge légendaire avec 4 victoires (1958, 1960-1962) principalement avec Ferrari. Gendebien était réputé pour son style fluide et sa capacité à préserver les mécaniques tout en maintenant un rythme compétitif. Il a également brillé dans d'autres courses d'endurance.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">4</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">11</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1955-1962</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Henri Pescarolo </h3>
+      <p data-fr="Héros français avec 4 victoires (1972-1974, 1984), Pescarolo est une icône nationale. Après sa carrière de pilote, il a fondé son propre team et continue de promouvoir l'endurance. Son engagement pour Le Mans s'étend sur plus de cinq décennies." data-en="French hero with 4 victories (1972-1974, 1984), Pescarolo is a national icon. After his driving career, he founded his own team and continues to promote endurance racing. His commitment to Le Mans spans over five decades.">Héros français avec 4 victoires (1972-1974, 1984), Pescarolo est une icône nationale. Après sa carrière de pilote, il a fondé son propre team et continue de promouvoir l'endurance. Son engagement pour Le Mans s'étend sur plus de cinq décennies.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">4</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">33</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1966-1999</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Yannick Dalmas </h3>
+      <p data-fr="Pilote français avec 4 victoires (1992, 1994, 1995, 1999), Dalmas a brillé avec différentes équipes dont Peugeot et BMW. Sa polyvalence et sa rapidité en ont fait l'un des pilotes les plus recherchés de son époque. Il a également connu le succès en Formule 1." data-en="French driver with 4 victories (1992, 1994, 1995, 1999), Dalmas shone with different teams including Peugeot and BMW. His versatility and speed made him one of the most sought-after drivers of his era. He also enjoyed success in Formula 1.">Pilote français avec 4 victoires (1992, 1994, 1995, 1999), Dalmas a brillé avec différentes équipes dont Peugeot et BMW. Sa polyvalence et sa rapidité en ont fait l'un des pilotes les plus recherchés de son époque. Il a également connu le succès en Formule 1.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">4</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">15</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1988-2001</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Hurley Haywood </h3>
+      <p data-fr="Américain avec 3 victoires (1977, 1983, 1994), Haywood est une légende de Porsche. Sa première victoire en 1977 à sa première participation reste exceptionnelle. Il a également dominé les courses d'endurance américaines, remportant cinq fois les 24 Heures de Daytona." data-en="American with 3 victories (1977, 1983, 1994), Haywood is a Porsche legend. His first victory in 1977 on his first participation remains exceptional. He also dominated American endurance races, winning the 24 Hours of Daytona five times.">Américain avec 3 victoires (1977, 1983, 1994), Haywood est une légende de Porsche. Sa première victoire en 1977 à sa première participation reste exceptionnelle. Il a également dominé les courses d'endurance américaines, remportant cinq fois les 24 Heures de Daytona.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">3</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">18</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1977-1994</span>
+       </div>
+      </div>
+     </div>
+     <div class="driver-card">
+      <h3>Allan McNish </h3>
+      <p data-fr="Écossais avec 3 victoires (1998, 2008, 2013) toutes avec Audi, McNish était connu pour sa vitesse pure et son agressivité contrôlée. Ancien pilote de F1, il a trouvé sa véritable vocation en endurance. Il est maintenant Team Principal de l'équipe Audi en Formule E." data-en="Scotsman with 3 victories (1998, 2008, 2013) all with Audi, McNish was known for his pure speed and controlled aggression. A former F1 driver, he found his true calling in endurance racing. He is now Team Principal of the Audi team in Formula E.">Écossais avec 3 victoires (1998, 2008, 2013) toutes avec Audi, McNish était connu pour sa vitesse pure et son agressivité contrôlée. Ancien pilote de F1, il a trouvé sa véritable vocation en endurance. Il est maintenant Team Principal de l'équipe Audi en Formule E.</p>
+      <div class="driver-stats">
+       <div class="stat"><span class="stat-label" data-fr="Victoires" data-en="Victories">Victoires</span> <span class="stat-value">3</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Participations" data-en="Participations">Participations</span> <span class="stat-value">16</span>
+       </div>
+       <div class="stat"><span class="stat-label" data-fr="Période" data-en="Period">Période</span> <span class="stat-value">1998-2013</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="resultsPage" class="page hidden">
+   <div class="hero">
+    <div class="container">
+     <h1 data-fr="📊 Résultats Historiques" data-en="📊 Historical Results">📊 Résultats Historiques</h1>
+     <p data-fr="Tous les vainqueurs depuis 1923 🏁" data-en="All winners since 1923 🏁">Tous les vainqueurs depuis 1923 🏁</p>
+    </div>
+   </div>
+   <div class="content">
+    <div class="container">
+     <div class="section">
+      <h2 data-fr="Palmarès Complet" data-en="Complete Results">Palmarès Complet</h2>
+      <div class="table-container">
+       <table>
+        <thead>
+         <tr>
+          <th data-fr="Année" data-en="Year">Année</th>
+          <th data-fr="Pilotes Vainqueurs" data-en="Winning Drivers">Pilotes Vainqueurs</th>
+          <th data-fr="Voiture" data-en="Car">Voiture</th>
+          <th data-fr="Distance (km)" data-en="Distance (km)">Distance (km)</th>
+         </tr>
+        </thead>
+        <tbody id="resultsTableBody"><!-- Results will be populated by JavaScript -->
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="teamPage" class="page hidden">
+   <div class="hero">
+    <div class="container">
+     <h1 data-fr="Notre Équipe" data-en="Our Team">Notre Équipe</h1>
+     <p data-fr="Les étudiants derrière ce projet" data-en="The students behind this project">Les étudiants derrière ce projet</p>
+    </div>
+   </div>
+   <div class="content">
+    <div class="container">
+     <div class="team-header">
+      <div class="section">
+       <h2 data-fr="Projet Académique" data-en="Academic Project">Projet Académique</h2>
+       <p data-fr="Ce projet a été réalisé dans le cadre de nos études pour explorer l'histoire et l'impact culturel des 24 Heures du Mans. À travers cette recherche approfondie, nous avons découvert comment cette course légendaire représente l'innovation française, la passion pour le sport automobile et l'esprit de persévérance." data-en="This project was carried out as part of our studies to explore the history and cultural impact of the 24 Hours of Le Mans. Through this in-depth research, we discovered how this legendary race represents French innovation, passion for motorsport and the spirit of perseverance.">Ce projet a été réalisé dans le cadre de nos études pour explorer l'histoire et l'impact culturel des 24 Heures du Mans. À travers cette recherche approfondie, nous avons découvert comment cette course légendaire représente l'innovation française, la passion pour le sport automobile et l'esprit de persévérance.</p>
+      </div>
+     </div>
+     <div class="faculty">
+      <h3 data-fr="Soumis à" data-en="Submitted to">Soumis à</h3>
+      <p><strong>Mrs. A. Manju Rekha</strong></p>
+      <p data-fr="Professeur Adjoint" data-en="Assistant Professor">Professeur Adjoint</p>
+     </div>
+     <div class="section">
+      <h2 data-fr="Membres de l'Équipe" data-en="Team Members">Membres de l'Équipe</h2>
+      <div class="table-container">
+       <table>
+        <thead>
+         <tr>
+          <th data-fr="N°" data-en="No.">N°</th>
+          <th data-fr="Numéro d'Inscription" data-en="Register Number">Numéro d'Inscription</th>
+          <th data-fr="Nom" data-en="Name">Nom</th>
+          <th data-fr="Section" data-en="Section">Section</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>1</td>
+          <td>RA2511026010280</td>
+          <td>KINSHUK JAIN</td>
+          <td>U1</td>
+         </tr>
+         <tr>
+          <td>2</td>
+          <td>RA2511026010253</td>
+          <td>PRINCE ROY</td>
+          <td>U1</td>
+         </tr>
+         <tr>
+          <td>3</td>
+          <td>RA2511026010271</td>
+          <td>KAVYA SINGH</td>
+          <td>U1</td>
+         </tr>
+         <tr>
+          <td>4</td>
+          <td>RA2511026010269</td>
+          <td>ADITYA SWAROOP</td>
+          <td>U1</td>
+         </tr>
+         <tr>
+          <td>5</td>
+          <td>RA2511026010267</td>
+          <td>SATCHITANAND MAHAPATRO</td>
+          <td>U1</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <div class="section">
+      <h2 data-fr="Remerciements" data-en="Acknowledgments">Remerciements</h2>
+      <p data-fr="Nous tenons à remercier Mrs. A. Manju Rekha pour son encadrement et son soutien tout au long de ce projet. Nous remercions également l'Automobile Club de l'Ouest (ACO) pour la préservation de l'histoire des 24 Heures du Mans et pour avoir rendu ces informations accessibles au public." data-en="We would like to thank Mrs. A. Manju Rekha for her guidance and support throughout this project. We also thank the Automobile Club de l'Ouest (ACO) for preserving the history of the 24 Hours of Le Mans and for making this information accessible to the public.">Nous tenons à remercier Mrs. A. Manju Rekha pour son encadrement et son soutien tout au long de ce projet. Nous remercions également l'Automobile Club de l'Ouest (ACO) pour la préservation de l'histoire des 24 Heures du Mans et pour avoir rendu ces informations accessibles au public.</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer>
+   <div class="container">
+   </div>
+  </footer>
+  <script>
+    const defaultConfig = {
+      site_title: "Les 24 Heures du Mans",
+      home_hero_title: "La Course Légendaire",
+      home_hero_subtitle: "24 heures d'endurance, de vitesse et de passion au cœur de la France",
+      background_color: "#1a1a2e",
+      surface_color: "#e74c3c",
+      text_color: "#ffffff",
+      primary_action_color: "#e74c3c",
+      secondary_action_color: "#3498db",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    let currentLang = 'fr';
+    let currentPage = 'home';
+
+    const translations = {
+      fr: {
+        siteTitle: "Les 24 Heures du Mans"
+      },
+      en: {
+        siteTitle: "The 24 Hours of Le Mans"
+      }
+    };
+
+    const leManResults = [
+      { year: 1923, drivers: "André Lagache, René Léonard", car: "Chenard-Walcker", distance: 2209 },
+      { year: 1924, drivers: "John Duff, Francis Clement", car: "Bentley 3L", distance: 2266 },
+      { year: 1925, drivers: "Gérard de Courcelles, André Rossignol", car: "La Lorraine-Dietrich B3-6", distance: 2233 },
+      { year: 1926, drivers: "Robert Bloch, André Rossignol", car: "La Lorraine-Dietrich B3-6", distance: 2478 },
+      { year: 1927, drivers: "J. Dudley Benjafield, Sammy Davis", car: "Bentley 3L", distance: 2420 },
+      { year: 1928, drivers: "Woolf Barnato, Bernard Rubin", car: "Bentley 4½L", distance: 2569 },
+      { year: 1929, drivers: "Woolf Barnato, Henry Birkin", car: "Bentley Speed Six", distance: 2845 },
+      { year: 1930, drivers: "Woolf Barnato, Glen Kidston", car: "Bentley Speed Six", distance: 2930 },
+      { year: 1931, drivers: "Earl Howe, Henry Birkin", car: "Alfa Romeo 8C 2300", distance: 3017 },
+      { year: 1932, drivers: "Raymond Sommer, Luigi Chinetti", car: "Alfa Romeo 8C 2300", distance: 3020 },
+      { year: 1933, drivers: "Raymond Sommer, Tazio Nuvolari", car: "Alfa Romeo 8C 2300", distance: 3092 },
+      { year: 1934, drivers: "Luigi Chinetti, Philippe Étancelin", car: "Alfa Romeo 8C 2300", distance: 3035 },
+      { year: 1935, drivers: "Johnny Hindmarsh, Luis Fontes", car: "Lagonda M45R", distance: 2982 },
+      { year: 1937, drivers: "Jean-Pierre Wimille, Robert Benoist", car: "Bugatti Type 57G", distance: 3267 },
+      { year: 1938, drivers: "Eugène Chaboud, Jean Tremoulet", car: "Delahaye 135CS", distance: 3181 },
+      { year: 1939, drivers: "Jean-Pierre Wimille, Pierre Veyron", car: "Bugatti Type 57C", distance: 3354 },
+      { year: 1949, drivers: "Luigi Chinetti, Lord Selsdon", car: "Ferrari 166MM", distance: 3009 },
+      { year: 1950, drivers: "Louis Rosier, Jean-Louis Rosier", car: "Talbot-Lago T26GS", distance: 3440 },
+      { year: 1951, drivers: "Peter Walker, Peter Whitehead", car: "Jaguar C-Type", distance: 3629 },
+      { year: 1952, drivers: "Hermann Lang, Fritz Riess", car: "Mercedes-Benz 300SL", distance: 3740 },
+      { year: 1953, drivers: "Tony Rolt, Duncan Hamilton", car: "Jaguar C-Type", distance: 4088 },
+      { year: 1954, drivers: "José Froilán González, Maurice Trintignant", car: "Ferrari 375 Plus", distance: 4334 },
+      { year: 1955, drivers: "Mike Hawthorn, Ivor Bueb", car: "Jaguar D-Type", distance: 4173 },
+      { year: 1956, drivers: "Ron Flockhart, Ninian Sanderson", car: "Jaguar D-Type", distance: 4397 },
+      { year: 1957, drivers: "Ron Flockhart, Ivor Bueb", car: "Jaguar D-Type", distance: 4734 },
+      { year: 1958, drivers: "Olivier Gendebien, Phil Hill", car: "Ferrari 250 Testa Rossa", distance: 4105 },
+      { year: 1959, drivers: "Carroll Shelby, Roy Salvadori", car: "Aston Martin DBR1", distance: 4391 },
+      { year: 1960, drivers: "Olivier Gendebien, Paul Frère", car: "Ferrari 250 Testa Rossa", distance: 4607 },
+      { year: 1961, drivers: "Olivier Gendebien, Phil Hill", car: "Ferrari 250 Testa Rossa", distance: 4552 },
+      { year: 1962, drivers: "Olivier Gendebien, Phil Hill", car: "Ferrari 330 TRI/LM", distance: 4710 },
+      { year: 1963, drivers: "Ludovico Scarfiotti, Lorenzo Bandini", car: "Ferrari 250P", distance: 4671 },
+      { year: 1964, drivers: "Jean Guichet, Nino Vaccarella", car: "Ferrari 275P", distance: 4694 },
+      { year: 1965, drivers: "Masten Gregory, Jochen Rindt", car: "Ferrari 250LM", distance: 4690 },
+      { year: 1966, drivers: "Bruce McLaren, Chris Amon", car: "Ford GT40 Mk II", distance: 4839 },
+      { year: 1967, drivers: "Dan Gurney, A.J. Foyt", car: "Ford GT40 Mk IV", distance: 5232 },
+      { year: 1968, drivers: "Pedro Rodríguez, Lucien Bianchi", car: "Ford GT40", distance: 4453 },
+      { year: 1969, drivers: "Jacky Ickx, Jackie Oliver", car: "Ford GT40", distance: 4998 },
+      { year: 1970, drivers: "Hans Herrmann, Richard Attwood", car: "Porsche 917K", distance: 4607 },
+      { year: 1971, drivers: "Helmut Marko, Gijs van Lennep", car: "Porsche 917K", distance: 5335 },
+      { year: 1972, drivers: "Henri Pescarolo, Graham Hill", car: "Matra-Simca MS670", distance: 4691 },
+      { year: 1973, drivers: "Henri Pescarolo, Gérard Larrousse", car: "Matra-Simca MS670B", distance: 4920 },
+      { year: 1974, drivers: "Henri Pescarolo, Gérard Larrousse", car: "Matra-Simca MS670C", distance: 4606 },
+      { year: 1975, drivers: "Jacky Ickx, Derek Bell", car: "Mirage GR8-Ford", distance: 4595 },
+      { year: 1976, drivers: "Jacky Ickx, Gijs van Lennep", car: "Porsche 936", distance: 4769 },
+      { year: 1977, drivers: "Jacky Ickx, Jürgen Barth, Hurley Haywood", car: "Porsche 936", distance: 4671 },
+      { year: 1978, drivers: "Jean-Pierre Jaussaud, Didier Pironi", car: "Renault-Alpine A442B", distance: 4967 },
+      { year: 1979, drivers: "Klaus Ludwig, Bill Whittington, Don Whittington", car: "Porsche 935 K3", distance: 4733 },
+      { year: 1980, drivers: "Jean-Pierre Jaussaud, Jean Rondeau", car: "Rondeau M379B-Ford", distance: 4609 },
+      { year: 1981, drivers: "Jacky Ickx, Derek Bell", car: "Porsche 936/81", distance: 4733 },
+      { year: 1982, drivers: "Jacky Ickx, Derek Bell", car: "Porsche 956", distance: 4860 },
+      { year: 1983, drivers: "Vern Schuppan, Hurley Haywood, Al Holbert", car: "Porsche 956", distance: 5044 },
+      { year: 1984, drivers: "Henri Pescarolo, Klaus Ludwig", car: "Porsche 956B", distance: 5000 },
+      { year: 1985, drivers: "Klaus Ludwig, Paolo Barilla, John Winter", car: "Porsche 956B", distance: 5088 },
+      { year: 1986, drivers: "Hans-Joachim Stuck, Derek Bell, Al Holbert", car: "Porsche 962C", distance: 4972 },
+      { year: 1987, drivers: "Hans-Joachim Stuck, Derek Bell, Al Holbert", car: "Porsche 962C", distance: 4949 },
+      { year: 1988, drivers: "Jan Lammers, Johnny Dumfries, Andy Wallace", car: "Jaguar XJR-9", distance: 5332 },
+      { year: 1989, drivers: "Jochen Mass, Manuel Reuter, Stanley Dickens", car: "Sauber-Mercedes C9", distance: 5335 },
+      { year: 1990, drivers: "John Nielsen, Price Cobb, Martin Brundle", car: "Jaguar XJR-12", distance: 4923 },
+      { year: 1991, drivers: "Volker Weidler, Johnny Herbert, Bertrand Gachot", car: "Mazda 787B", distance: 4923 },
+      { year: 1992, drivers: "Derek Warwick, Yannick Dalmas, Mark Blundell", car: "Peugeot 905B", distance: 4922 },
+      { year: 1993, drivers: "Geoff Brabham, Christophe Bouchut, Éric Hélary", car: "Peugeot 905B", distance: 5100 },
+      { year: 1994, drivers: "Yannick Dalmas, Hurley Haywood, Mauro Baldi", car: "Dauer 962 LM", distance: 5180 },
+      { year: 1995, drivers: "Yannick Dalmas, J.J. Lehto, Masanori Sekiya", car: "McLaren F1 GTR", distance: 4972 },
+      { year: 1996, drivers: "Davy Jones, Manuel Reuter, Alexander Wurz", car: "TWR Porsche WSC-95", distance: 5003 },
+      { year: 1997, drivers: "Michele Alboreto, Stefan Johansson, Tom Kristensen", car: "TWR Porsche WSC-95", distance: 4962 },
+      { year: 1998, drivers: "Allan McNish, Laurent Aïello, Stéphane Ortelli", car: "Porsche 911 GT1-98", distance: 4989 },
+      { year: 1999, drivers: "Yannick Dalmas, Joachim Winkelhock, Pierluigi Martini", car: "BMW V12 LMR", distance: 5003 },
+      { year: 2000, drivers: "Frank Biela, Tom Kristensen, Emanuele Pirro", car: "Audi R8", distance: 5187 },
+      { year: 2001, drivers: "Frank Biela, Tom Kristensen, Emanuele Pirro", car: "Audi R8", distance: 5410 },
+      { year: 2002, drivers: "Frank Biela, Tom Kristensen, Emanuele Pirro", car: "Audi R8", distance: 5233 },
+      { year: 2003, drivers: "Guy Smith, Tom Kristensen, Rinaldo Capello", car: "Bentley Speed 8", distance: 5145 },
+      { year: 2004, drivers: "Seiji Ara, Tom Kristensen, Rinaldo Capello", car: "Audi R8", distance: 5180 },
+      { year: 2005, drivers: "J.J. Lehto, Tom Kristensen, Marco Werner", car: "Audi R8", distance: 5149 },
+      { year: 2006, drivers: "Frank Biela, Emanuele Pirro, Marco Werner", car: "Audi R10 TDI", distance: 5187 },
+      { year: 2007, drivers: "Frank Biela, Emanuele Pirro, Marco Werner", car: "Audi R10 TDI", distance: 5143 },
+      { year: 2008, drivers: "Rinaldo Capello, Tom Kristensen, Allan McNish", car: "Audi R10 TDI", distance: 5192 },
+      { year: 2009, drivers: "David Brabham, Marc Gené, Alexander Wurz", car: "Peugeot 908 HDi FAP", distance: 5171 },
+      { year: 2010, drivers: "Timo Bernhard, Romain Dumas, Mike Rockenfeller", car: "Audi R15 TDI", distance: 5410 },
+      { year: 2011, drivers: "André Lotterer, Benoît Tréluyer, Marcel Fässler", car: "Audi R18 TDI", distance: 5410 },
+      { year: 2012, drivers: "André Lotterer, Benoît Tréluyer, Marcel Fässler", car: "Audi R18 e-tron quattro", distance: 5265 },
+      { year: 2013, drivers: "Loïc Duval, Tom Kristensen, Allan McNish", car: "Audi R18 e-tron quattro", distance: 5207 },
+      { year: 2014, drivers: "André Lotterer, Benoît Tréluyer, Marcel Fässler", car: "Audi R18 e-tron quattro", distance: 5209 },
+      { year: 2015, drivers: "Nick Heidfeld, Nico Hülkenberg, Earl Bamber", car: "Porsche 919 Hybrid", distance: 5233 },
+      { year: 2016, drivers: "Romain Dumas, Neel Jani, Marc Lieb", car: "Porsche 919 Hybrid", distance: 5233 },
+      { year: 2017, drivers: "Timo Bernhard, Earl Bamber, Brendon Hartley", car: "Porsche 919 Hybrid", distance: 5001 },
+      { year: 2018, drivers: "Fernando Alonso, Kazuki Nakajima, Sébastien Buemi", car: "Toyota TS050 Hybrid", distance: 5156 },
+      { year: 2019, drivers: "Fernando Alonso, Kazuki Nakajima, Sébastien Buemi", car: "Toyota TS050 Hybrid", distance: 5286 },
+      { year: 2020, drivers: "Kazuki Nakajima, Sébastien Buemi, Brendon Hartley", car: "Toyota TS050 Hybrid", distance: 4767 },
+      { year: 2021, drivers: "Mike Conway, Kamui Kobayashi, José María López", car: "Toyota GR010 Hybrid", distance: 4980 },
+      { year: 2022, drivers: "Sébastien Buemi, Brendon Hartley, Ryo Hirakawa", car: "Toyota GR010 Hybrid", distance: 5177 },
+      { year: 2023, drivers: "Alessandro Pier Guidi, James Calado, Antonio Giovinazzi", car: "Ferrari 499P", distance: 5192 },
+      { year: 2024, drivers: "Brendon Hartley, Ryo Hirakawa, Sébastien Buemi", car: "Toyota GR010 Hybrid", distance: 5211 }
+    ];
+
+    function populateResults() {
+      const tbody = document.getElementById('resultsTableBody');
+      tbody.innerHTML = '';
+      
+      leManResults.forEach(result => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${result.year}</td>
+          <td>${result.drivers}</td>
+          <td>${result.car}</td>
+          <td>${result.distance}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function switchPage(pageName) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.add('hidden');
+      });
+      
+      document.getElementById(pageName + 'Page').classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+      
+      currentPage = pageName;
+      
+      window.scrollTo(0, 0);
+    }
+
+    function translatePage() {
+      document.querySelectorAll('[data-fr]').forEach(element => {
+        const frText = element.getAttribute('data-fr');
+        const enText = element.getAttribute('data-en');
+        element.textContent = currentLang === 'fr' ? frText : enText;
+      });
+      
+      const siteLogo = document.getElementById('siteLogo');
+      siteLogo.textContent = window.elementSdk?.config?.site_title || defaultConfig.site_title;
+      
+      const heroTitle = document.getElementById('heroTitle');
+      if (heroTitle) {
+        heroTitle.textContent = window.elementSdk?.config?.home_hero_title || defaultConfig.home_hero_title;
+      }
+      
+      const heroSubtitle = document.getElementById('heroSubtitle');
+      if (heroSubtitle) {
+        heroSubtitle.textContent = window.elementSdk?.config?.home_hero_subtitle || defaultConfig.home_hero_subtitle;
+      }
+    }
+
+    document.getElementById('langToggle').addEventListener('click', function() {
+      currentLang = currentLang === 'fr' ? 'en' : 'fr';
+      this.textContent = currentLang === 'fr' ? 'EN' : 'FR';
+      translatePage();
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const page = this.getAttribute('data-page');
+        switchPage(page);
+      });
+    });
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+      
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${baseSize}px`;
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, #16213e 100%)`;
+      document.body.style.color = config.text_color || defaultConfig.text_color;
+      
+      const nav = document.querySelector('nav');
+      if (nav) {
+        nav.style.borderBottomColor = config.surface_color || defaultConfig.surface_color;
+      }
+      
+      const logo = document.querySelector('.logo');
+      if (logo) {
+        logo.style.color = config.surface_color || defaultConfig.surface_color;
+        logo.textContent = config.site_title || defaultConfig.site_title;
+      }
+      
+      document.querySelectorAll('.nav-links a:hover, .nav-links a.active').forEach(link => {
+        link.style.color = config.surface_color || defaultConfig.surface_color;
+        link.style.borderBottomColor = config.surface_color || defaultConfig.surface_color;
+      });
+      
+      const langToggle = document.querySelector('.lang-toggle');
+      if (langToggle) {
+        langToggle.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      }
+      
+      document.querySelectorAll('.hero h1').forEach(h1 => {
+        h1.style.fontSize = `${baseSize * 3.5}px`;
+        h1.style.color = config.surface_color || defaultConfig.surface_color;
+      });
+      
+      const heroTitle = document.getElementById('heroTitle');
+      if (heroTitle) {
+        heroTitle.textContent = config.home_hero_title || defaultConfig.home_hero_title;
+      }
+      
+      document.querySelectorAll('.hero p').forEach(p => {
+        p.style.fontSize = `${baseSize * 1.375}px`;
+        p.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      const heroSubtitle = document.getElementById('heroSubtitle');
+      if (heroSubtitle) {
+        heroSubtitle.textContent = config.home_hero_subtitle || defaultConfig.home_hero_subtitle;
+      }
+      
+      document.querySelectorAll('.section h2').forEach(h2 => {
+        h2.style.fontSize = `${baseSize * 2.25}px`;
+        h2.style.color = config.surface_color || defaultConfig.surface_color;
+        h2.style.borderBottomColor = config.surface_color || defaultConfig.surface_color;
+      });
+      
+      document.querySelectorAll('.section h3').forEach(h3 => {
+        h3.style.fontSize = `${baseSize * 1.5}px`;
+        h3.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      });
+      
+      document.querySelectorAll('.section p, .section li').forEach(text => {
+        text.style.fontSize = `${baseSize * 1.0625}px`;
+        text.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      document.querySelectorAll('.card h3').forEach(h3 => {
+        h3.style.color = config.surface_color || defaultConfig.surface_color;
+      });
+      
+      document.querySelectorAll('th').forEach(th => {
+        th.style.background = config.surface_color || defaultConfig.surface_color;
+        th.style.fontSize = `${baseSize}px`;
+      });
+      
+      document.querySelectorAll('td').forEach(td => {
+        td.style.fontSize = `${baseSize}px`;
+        td.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      document.querySelectorAll('.driver-card h3').forEach(h3 => {
+        h3.style.fontSize = `${baseSize * 1.625}px`;
+        h3.style.color = config.surface_color || defaultConfig.surface_color;
+      });
+      
+      document.querySelectorAll('.stat-label').forEach(label => {
+        label.style.fontSize = `${baseSize * 0.875}px`;
+        label.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      });
+      
+      document.querySelectorAll('.stat-value').forEach(value => {
+        value.style.fontSize = `${baseSize * 1.25}px`;
+        value.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      document.querySelectorAll('.faculty h3').forEach(h3 => {
+        h3.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      });
+      
+      document.querySelectorAll('footer p').forEach(p => {
+        p.style.fontSize = `${baseSize}px`;
+        p.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      const footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.borderTopColor = config.surface_color || defaultConfig.surface_color;
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["site_title", config.site_title || defaultConfig.site_title],
+          ["home_hero_title", config.home_hero_title || defaultConfig.home_hero_title],
+          ["home_hero_subtitle", config.home_hero_subtitle || defaultConfig.home_hero_subtitle]
+        ])
+      });
+    }
+
+    populateResults();
+    translatePage();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'999a93445693b29a',t:'MTc2MjMyNzA4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
